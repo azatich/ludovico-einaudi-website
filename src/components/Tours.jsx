@@ -1,3 +1,4 @@
+import { Minus } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -64,8 +65,8 @@ const Tours = () => {
           .slice(0, 1)
           .map((month) => (
             <div key={month} className="flex flex-col gap-4">
-              <h2 className="uppercase font-bold text-xl border-b border-white/30 pb-2">
-                — {month} 2025
+              <h2 className="flex gap-2 uppercase font-bold text-xl border-b border-white/30 pb-2">
+                <Minus /> {month} 2025
               </h2>
 
               {groupedTours[month].map((tour) => (

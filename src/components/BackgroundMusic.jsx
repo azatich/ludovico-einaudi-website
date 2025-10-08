@@ -1,11 +1,12 @@
-import { Pause, Play } from 'lucide-react';
-import React, { useEffect, useRef, useState } from 'react'
+import { Pause, Play, Volume, Volume1, Volume2, VolumeOff } from "lucide-react";
+import React, { useEffect, useRef, useState } from "react";
 
 const BackgroundMusic = () => {
-    const audioRef = useRef(null);
+  const audioRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
+  const [volume, setVolume] = useState(0.5);
 
   // Format time like mm:ss
   const formatTime = (time) => {
@@ -28,7 +29,6 @@ const BackgroundMusic = () => {
     setIsPlaying(!isPlaying);
   };
 
-  // Update current time
   useEffect(() => {
     const audio = audioRef.current;
 
@@ -38,7 +38,7 @@ const BackgroundMusic = () => {
       setCurrentTime(audio.currentTime);
     };
     const setAudioData = () => {
-      setDuration(audio.duration)
+      setDuration(audio.duration);
     };
 
     audio.addEventListener("timeupdate", updateTime);
@@ -58,9 +58,25 @@ const BackgroundMusic = () => {
     setCurrentTime(audio.currentTime);
   };
 
+  const handleVolumeChange = (e) => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    audio.volume = parseFloat(e.target.value);
+    setVolume(parseFloat(e.target.value));
+  };
+
+  const handleChangeVolumeWithIcon = (vol) => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    audio.volume = parseFloat(vol);
+    setVolume(parseFloat(vol));
+  };
+
   return (
     <div>
-        <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 bg-black/40 backdrop-blur-md rounded-full px-6 py-3 flex items-center gap-4 text-white w-[90%] max-w-md">
+      <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 bg-black/40 backdrop-blur-md rounded-full px-6 py-3 flex items-center gap-4 text-white w-[90%]">
         <button onClick={togglePlay} className="p-2 hover:scale-110 transition">
           {isPlaying ? <Pause size={24} /> : <Play size={24} />}
         </button>
@@ -75,10 +91,29 @@ const BackgroundMusic = () => {
           max={duration || 0}
           value={currentTime}
           onChange={handleSeek}
-          className="flex-1 accent-white cursor-pointer"
+          className="flex-1 w-16 accent-white cursor-pointer"
         />
 
         <span className="text-sm w-10">{formatTime(duration)}</span>
+
+        {volume === 0 ? (
+          <VolumeOff onClick={() => handleChangeVolumeWithIcon(0.5)} />
+        ) : volume < 0.3 ? (
+          <Volume onClick={() => handleChangeVolumeWithIcon(0)} />
+        ) : volume < 0.7 ? (
+          <Volume1 onClick={() => handleChangeVolumeWithIcon(0)} />
+        ) : (
+          <Volume2 onClick={() => handleChangeVolumeWithIcon(0)} />
+        )}
+        <input
+          type="range"
+          min="0"
+          max="1"
+          step="0.01"
+          value={volume}
+          onChange={handleVolumeChange}
+          className="accent-white cursor-pointer"
+        />
       </div>
 
       {/* Hidden Audio Element */}
@@ -89,7 +124,7 @@ const BackgroundMusic = () => {
         />
       </audio>
     </div>
-  )
-}
+  );
+};
 
-export default BackgroundMusic
+export default BackgroundMusic;

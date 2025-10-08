@@ -1,9 +1,11 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react"; // optional: nice icons
 
 const Navbar = () => {
-  const currentRoute = window.location.pathname;
+  const { pathname } = useLocation();
+  console.log(pathname);
+
   const [toggleMenu, setToggleMenu] = useState(false);
 
   const navLinks = [
@@ -14,7 +16,7 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="flex items-center justify-between text-white h-[90px] px-4 md:px-10 md:gap-8 uppercase relative">
+    <nav className="flex bg-transparent items-center justify-between text-white h-[90px] px-4 md:px-12 md:gap-8 uppercase relative">
       {/* Left: Search */}
       <div className="order-1">
         <input
@@ -35,9 +37,22 @@ const Navbar = () => {
           <Link
             to={nav.link}
             key={nav.label}
-            className={`${
-              currentRoute === nav.link ? "underline" : ""
-            } hover:text-white/80 hover:underline transition duration-200`}
+            className={`${pathname === nav.link ? "text-white/80 after:content=[''] after:absolute after:bottom-0 after:h-0.5 after:w-full after:bg-white" : ''}
+    relative
+    after:content-['']
+    after:absolute
+    after:bottom-0
+    after:left-1/2
+    after:h-[2px]
+    after:w-0
+    after:bg-white
+    after:transition-all
+    after:duration-300
+    after:-translate-x-1/2
+    hover:after:w-full
+    hover:text-white/80
+    transition
+  `}
           >
             {nav.label}
           </Link>
@@ -64,7 +79,7 @@ const Navbar = () => {
             key={nav.label}
             onClick={() => setToggleMenu(false)}
             className={`${
-              currentRoute === nav.link ? "underline" : ""
+              pathname === nav.link ? "underline" : ""
             } text-lg pr-6 hover:text-white/80 hover:underline transition duration-200`}
           >
             {nav.label}
