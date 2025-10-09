@@ -1,6 +1,7 @@
 import { formatMusicTime } from "../utils/utils";
 
-const ProgessBarMusic = ({duration, audioRef, currentTime, setCurrentTime}) => {
+const ProgessBarMusic = ({duration, audioRef, currentTime, setCurrentTime, isMinimizedBar}) => {
+  
 
   const handleSeek = (e) => {
     const audio = audioRef.current;
@@ -10,13 +11,12 @@ const ProgessBarMusic = ({duration, audioRef, currentTime, setCurrentTime}) => {
   };
 
   return (
-    <div className="flex justify-between items-center gap-2 w-full">
+    <div className={`flex justify-between items-center gap-2 w-full ${isMinimizedBar && 'hidden'}`}>
       {/* Current Time */}
       <span className="text-xs sm:text-sm w-10 text-right">
         {formatMusicTime(currentTime)}
       </span>
 
-      {/* Progress Bar */}
       <input
         type="range"
         min="0"

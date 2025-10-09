@@ -1,21 +1,13 @@
-import { useRef, useState } from "react";
-import {
-  Play,
-  Pause,
-  Volume,
-  Volume1,
-  Volume2,
-  VolumeOff,
-  Minimize2,
-  Maximize2,
-} from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { Play, Pause, Minimize2, Maximize2 } from "lucide-react";
 import ProgessBarMusic from "./ProgessBarMusic";
+import VolumeBarMusic from "./VolumeBarMusic";
 
 const BackgroundMusic = () => {
   const audioRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
-  const [volume, setVolume] = useState(0.5);
+  const [isMinimizedBar, setIsMinimizedBar] = useState(false);
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
 
@@ -26,27 +18,44 @@ const BackgroundMusic = () => {
     setIsPlaying(!isPlaying);
   };
 
-  const handleVolumeChange = (e) => {
-    const audio = audioRef.current;
-    const newVolume = parseFloat(e.target.value);
-    audio.volume = newVolume;
-    setVolume(newVolume);
-  };
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 640) {
+        setIsMinimizedBar(false);
+      }
+    };
 
-  const handleChangeVolumeWithIcon = (value) => {
-    const audio = audioRef.current;
-    audio.volume = value;
-    setVolume(value);
-  };
+    handleResize(); // run on mount
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
-    <div className="fixed bottom-4 left-1/2 -translate-x-1/2 w-[95%] sm:w-[90%] md:w-[80%] lg:w-[60%] z-50">
+    <div
+      className={`fixed bottom-4 left-1/2 -translate-x-1/2 w-full max-w-[95%] sm:max-w-[90%] md:max-w-[80%] lg:max-w-[60%] z-50 transition-all duration-500 ease-in-out`}
+      style={{
+        maxWidth: isMinimizedBar ? "80px" : "60%", // adjust as needed
+      }}
+    >
       {/* Toggle Minimize / Maximize Button */}
       <button
-        onClick={() => setIsMinimized(!isMinimized)}
+        onClick={() => {
+          setIsMinimized(!isMinimized);
+          setIsMinimizedBar(false);
+        }}
         className="absolute top-[-10px] right-[-10px] sm:hidden z-50 text-white bg-black/40 backdrop-blur-md p-1 rounded-full hover:bg-white/20 transition"
       >
         {isMinimized ? <Maximize2 size={18} /> : <Minimize2 size={18} />}
+      </button>
+
+      <button
+        onClick={() => {
+          setIsMinimizedBar(!isMinimizedBar);
+          setIsMinimized(false)
+        }}
+        className="hidden sm:block absolute top-1 left-1 text-white z-10"
+      >
+        <Minimize2 />
       </button>
 
       {/* Player Container */}
@@ -67,35 +76,15 @@ const BackgroundMusic = () => {
           audioRef={audioRef}
           currentTime={currentTime}
           setCurrentTime={setCurrentTime}
+          isMinimizedBar={isMinimizedBar}
         />
 
         {/* Volume Section */}
-        {/* Always visible on sm+ screens, hidden on mobile only when minimized */}
-        <div
-          className={`flex items-center gap-2 ${
-            isMinimized ? "hidden sm:flex" : "flex"
-          }`}
-        >
-          {volume === 0 ? (
-            <VolumeOff onClick={() => handleChangeVolumeWithIcon(0.5)} />
-          ) : volume < 0.3 ? (
-            <Volume onClick={() => handleChangeVolumeWithIcon(0)} />
-          ) : volume < 0.7 ? (
-            <Volume1 onClick={() => handleChangeVolumeWithIcon(0)} />
-          ) : (
-            <Volume2 onClick={() => handleChangeVolumeWithIcon(0)} />
-          )}
-
-          <input
-            type="range"
-            min="0"
-            max="1"
-            step="0.01"
-            value={volume}
-            onChange={handleVolumeChange}
-            className="w-20 md:w-24 accent-white cursor-pointer h-1 sm:h-1.5"
-          />
-        </div>
+        <VolumeBarMusic
+          isMinimized={isMinimized}
+          audioRef={audioRef}
+          isMinimizedBar={isMinimizedBar}
+        />
       </div>
 
       {/* Hidden Audio Element */}
