@@ -4,7 +4,6 @@ import { Menu, X } from "lucide-react"; // optional: nice icons
 
 const Navbar = () => {
   const { pathname } = useLocation();
-  console.log(pathname);
 
   const [toggleMenu, setToggleMenu] = useState(false);
 
@@ -32,12 +31,16 @@ const Navbar = () => {
       </div>
 
       {/* Right: Desktop Nav Links */}
-      <div className="hidden md:flex gap-6 order-3">
+      <div className={`hidden md:flex gap-6 order-3`}>
         {navLinks.map((nav) => (
           <Link
             to={nav.link}
             key={nav.label}
-            className={`${pathname === nav.link ? "text-white/80 after:content=[''] after:absolute after:bottom-0 after:h-0.5 after:w-full after:bg-white" : ''}
+            className={`${
+              pathname === nav.link
+                ? "text-white/80 after:content=[''] after:absolute after:bottom-0 after:h-0.5 after:w-full after:bg-white"
+                : ""
+            }
     relative
     after:content-['']
     after:absolute
@@ -59,9 +62,16 @@ const Navbar = () => {
         ))}
       </div>
 
+      <div
+        className={`fixed inset-0 bg-black/40 backdrop-blur-sm z-40 transition-opacity duration-500 ${
+          toggleMenu ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+        }`}
+        onClick={() => setToggleMenu(false)}
+      ></div>
+
       {/* Mobile Menu Button */}
       <button
-        className="md:hidden order-3 text-3xl"
+        className="z-100 md:hidden order-3 text-3xl"
         onClick={() => setToggleMenu(!toggleMenu)}
       >
         {toggleMenu ? <X /> : <Menu />}
@@ -69,9 +79,13 @@ const Navbar = () => {
 
       {/* Mobile Menu Dropdown */}
       <div
-        className={`absolute top-[90px] right-0 w-1/3 sm:w-1/3 h-[100vh] bg-black/50 flex flex-col items-end gap-12 py-6 md:hidden z-50 
-  transition-transform duration-500 ease-in-out 
-  ${toggleMenu ? "translate-x-0" : "translate-x-full"}`}
+        className={`fixed top-[90px] right-0 w-2/5 sm:w-1/3 h-[100vh] bg-black/50 flex flex-col items-end gap-12 py-6 md:hidden z-50 
+  transition-all duration-500 ease-in-out transform
+  ${
+    toggleMenu
+      ? "translate-x-0 opacity-100"
+      : "translate-x-full opacity-0 pointer-events-none"
+  }`}
       >
         {navLinks.map((nav) => (
           <Link
@@ -80,7 +94,7 @@ const Navbar = () => {
             onClick={() => setToggleMenu(false)}
             className={`${
               pathname === nav.link ? "underline" : ""
-            } text-lg pr-6 hover:text-white/80 hover:underline transition duration-200`}
+            } text-lg pr-10 hover:text-white/80 hover:underline transition duration-200`}
           >
             {nav.label}
           </Link>

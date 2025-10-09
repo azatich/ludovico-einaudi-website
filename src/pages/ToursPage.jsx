@@ -1,6 +1,7 @@
+import React from 'react'
 import PianoLoader from '../components/PianoLoader'
 
-const AboutPage = () => {
+const ToursPage = () => {
   return (
     <div className='bg-white'>
       <PianoLoader />
@@ -8,4 +9,4 @@ const AboutPage = () => {
   )
 }
 
-export default AboutPage
+export default ToursPage

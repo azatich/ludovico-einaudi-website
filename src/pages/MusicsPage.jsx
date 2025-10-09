@@ -1,11 +1,11 @@
 import PianoLoader from '../components/PianoLoader'
 
-const AboutPage = () => {
+const MusicsPage = () => {
   return (
-    <div className='bg-white'>
+   <div className='bg-white'>
       <PianoLoader />
     </div>
   )
 }
 
-export default AboutPage
+export default MusicsPage

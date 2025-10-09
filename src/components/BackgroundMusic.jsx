@@ -91,7 +91,7 @@ const BackgroundMusic = () => {
           max={duration || 0}
           value={currentTime}
           onChange={handleSeek}
-          className="flex-1 w-16 accent-white cursor-pointer"
+          className="flex-1 w-full accent-white cursor-pointer"
         />
 
         <span className="text-sm w-10">{formatTime(duration)}</span>
@@ -112,7 +112,7 @@ const BackgroundMusic = () => {
           step="0.01"
           value={volume}
           onChange={handleVolumeChange}
-          className="accent-white cursor-pointer"
+          className="w-1/6 accent-white cursor-pointer"
         />
       </div>
 
