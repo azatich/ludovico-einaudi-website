@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { Play, Pause, Minimize2, Maximize2 } from "lucide-react";
 import ProgessBarMusic from "./ProgessBarMusic";
 import VolumeBarMusic from "./VolumeBarMusic";
@@ -6,7 +6,6 @@ import VolumeBarMusic from "./VolumeBarMusic";
 const BackgroundMusic = () => {
   const audioRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [isMinimized, setIsMinimized] = useState(false);
   const [isMinimizedBar, setIsMinimizedBar] = useState(false);
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
@@ -18,18 +17,6 @@ const BackgroundMusic = () => {
     setIsPlaying(!isPlaying);
   };
 
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth < 640) {
-        setIsMinimizedBar(false);
-      }
-    };
-
-    handleResize(); // run on mount
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
   return (
     <div
       className={`fixed bottom-4 left-1/2 -translate-x-1/2 w-full max-w-[95%] sm:max-w-[90%] md:max-w-[80%] lg:max-w-[60%] z-50 transition-all duration-500 ease-in-out`}
@@ -37,23 +24,12 @@ const BackgroundMusic = () => {
         maxWidth: isMinimizedBar ? "80px" : "60%", // adjust as needed
       }}
     >
-      {/* Toggle Minimize / Maximize Button */}
-      <button
-        onClick={() => {
-          setIsMinimized(!isMinimized);
-          setIsMinimizedBar(false);
-        }}
-        className="absolute top-[-10px] right-[-10px] sm:hidden z-50 text-white bg-black/40 backdrop-blur-md p-1 rounded-full hover:bg-white/20 transition"
-      >
-        {isMinimized ? <Maximize2 size={18} /> : <Minimize2 size={18} />}
-      </button>
 
       <button
         onClick={() => {
           setIsMinimizedBar(!isMinimizedBar);
-          setIsMinimized(false)
         }}
-        className="hidden sm:block absolute top-1 left-1 text-white z-10"
+        className="absolute top-1 left-1 text-white z-10"
       >
         <Minimize2 />
       </button>
@@ -81,7 +57,6 @@ const BackgroundMusic = () => {
 
         {/* Volume Section */}
         <VolumeBarMusic
-          isMinimized={isMinimized}
           audioRef={audioRef}
           isMinimizedBar={isMinimizedBar}
         />

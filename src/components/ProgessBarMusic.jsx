@@ -1,7 +1,6 @@
 import { formatMusicTime } from "../utils/utils";
 
 const ProgessBarMusic = ({duration, audioRef, currentTime, setCurrentTime, isMinimizedBar}) => {
-  
 
   const handleSeek = (e) => {
     const audio = audioRef.current;

@@ -4,7 +4,7 @@ import {Volume,
   Volume2,
   VolumeOff,} from 'lucide-react'
 
-const VolumeBarMusic = ({ isMinimized, audioRef, isMinimizedBar }) => {
+const VolumeBarMusic = ({ audioRef, isMinimizedBar }) => {
   const [volume, setVolume] = useState(0.5);
 
   const handleChangeVolumeWithIcon = (value) => {
@@ -22,9 +22,7 @@ const VolumeBarMusic = ({ isMinimized, audioRef, isMinimizedBar }) => {
 
   return (
     <div
-      className={`flex items-center gap-2 ${
-        isMinimized ? "hidden sm:flex" : "flex"
-      } ${isMinimizedBar && "hidden"}`}
+      className={`flex items-center gap-2 ${isMinimizedBar && "hidden"}`}
     >
       {volume === 0 ? (
         <VolumeOff onClick={() => handleChangeVolumeWithIcon(0.5)} />
