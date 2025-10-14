@@ -1,13 +1,12 @@
 import PianoLoader from '../components/PianoLoader'
+import AboutTextSection from '../sections/AboutTextSection'
 import CarouselSection from '../sections/CarouselSection'
 
 const AboutPage = () => {
   return (
-    <div className='bg-white'>
+    <div className='bg-black'>
       <CarouselSection />
-      <div className='h-screen bg-amber-950'>
-
-      </div>
+      <AboutTextSection />
     </div>
   )
 }

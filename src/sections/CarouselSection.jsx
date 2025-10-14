@@ -60,9 +60,6 @@ const CarouselSection = () => {
       ref={ref}
       className="relative bg-black text-white h-[200vh] sm:h-[250vh] lg:h-[300vh]"
     >
-      <h1 className="text-2xl md:text-3xl lg:text-4xl font-semibold text-center pt-10 uppercase">
-        About Ludovico Einaudi
-      </h1>
 
       {/* Sticky horizontal scroll zone */}
       <div className="sticky top-0 flex h-screen items-center overflow-hidden">
