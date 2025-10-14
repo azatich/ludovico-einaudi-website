@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X } from "lucide-react"; // optional: nice icons
 
 const Navbar = () => {
   const { pathname } = useLocation();
@@ -64,7 +63,9 @@ const Navbar = () => {
 
       <div
         className={`fixed inset-0 bg-black/40 backdrop-blur-sm z-40 transition-opacity duration-500 ${
-          toggleMenu ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+          toggleMenu
+            ? "opacity-100 pointer-events-auto"
+            : "opacity-0 pointer-events-none"
         }`}
         onClick={() => setToggleMenu(false)}
       ></div>
@@ -74,7 +75,23 @@ const Navbar = () => {
         className="z-100 md:hidden order-3 text-3xl"
         onClick={() => setToggleMenu(!toggleMenu)}
       >
-        {toggleMenu ? <X /> : <Menu />}
+        <div className="flex flex-col gap-1.5">
+          <span
+            className={`${
+              toggleMenu ? "rotate-45 translate-y-[8px]" : ""
+            } block bg-white w-6 h-[2px] transition-transform duration-200`}
+          ></span>
+          <span
+            className={`${
+              toggleMenu ? "opacity-0" : ""
+            } block bg-white w-6 h-[2px] transition-opacity duration-200`}
+          ></span>
+          <span
+            className={`${
+              toggleMenu ? "-rotate-45 -translate-y-[8px]" : ""
+            } block bg-white w-6 h-[2px] transition-transform duration-200`}
+          ></span>
+        </div>
       </button>
 
       {/* Mobile Menu Dropdown */}
