@@ -52,7 +52,7 @@ const CarouselSection = () => {
   const x = useTransform(
     scrollYProgress,
     [0, 1],
-    ["0%", isSmall ? "-190%" : isMedium ? "-150%" : isLarge ? "-110%" : isXL ? "-80%" : "-57%"]
+    ["0%", isSmall ? "-228%" : isMedium ? "-150%" : isLarge ? "-110%" : isXL ? "-80%" : "-57%"]
   );
 
   return (
@@ -67,22 +67,22 @@ const CarouselSection = () => {
           <img
             src={one}
             alt="Ludovico 1"
-            className="w-[65vw] sm:w-[30rem] md:w-[32rem] lg:w-[35rem] h-[18rem] sm:h-[22rem] object-cover"
+            className="w-[75vw] sm:w-[30rem] md:w-[32rem] lg:w-[35rem] h-[18rem] sm:h-[22rem] object-cover"
           />
           <img
             src={two}
             alt="Ludovico 2"
-            className="w-[65vw] sm:w-[30rem] md:w-[32rem] lg:w-[35rem] h-[18rem] sm:h-[22rem] object-cover"
+            className="w-[75vw] sm:w-[30rem] md:w-[32rem] lg:w-[35rem] h-[18rem] sm:h-[22rem] object-cover"
           />
           <img
             src={three}
             alt="Ludovico 3"
-            className="w-[65vw] sm:w-[30rem] md:w-[32rem] lg:w-[35rem] h-[18rem] sm:h-[22rem] object-cover"
+            className="w-[75vw] sm:w-[30rem] md:w-[32rem] lg:w-[35rem] h-[18rem] sm:h-[22rem] object-cover"
           />
           <img
             src={four}
             alt="Ludovico 3"
-            className="w-[65vw] sm:w-[30rem] md:w-[32rem] lg:w-[35rem] h-[18rem] sm:h-[22rem] object-cover"
+            className="w-[75vw] sm:w-[30rem] md:w-[32rem] lg:w-[35rem] h-[18rem] sm:h-[22rem] object-cover"
           />
         </motion.div>
       </div>

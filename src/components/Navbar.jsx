@@ -46,7 +46,7 @@ const Navbar = () => {
     after:bottom-0
     after:left-1/2
     after:h-[2px]
-    after:w-0
+    after:w-0 
     after:bg-white
     after:transition-all
     after:duration-300
