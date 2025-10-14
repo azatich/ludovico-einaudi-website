@@ -31,7 +31,7 @@ const BackgroundMusic = () => {
         }}
         className="absolute top-1 left-1 text-white z-10"
       >
-        <Minimize2 />
+        {isMinimizedBar ? <Maximize2 /> : <Minimize2 />}
       </button>
 
       {/* Player Container */}
